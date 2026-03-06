@@ -701,7 +701,7 @@ function poll_iframes() {
         searchiFrames[searchmethod].timeout--;
 
         if (check_result.has_cpanel_loader === 1) {
-          window.location.href=searchiFrames[searchmethod].url;
+          window.location.href=searchiFrames[searchmethod].redirect_url;
           searchiFrames = {}; /* make sure we do not try anything else */
           return;  /* we are redirecting now */
         }
