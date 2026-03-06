@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+<head>
+    <base href="https://aryanims.in/">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+        content="Aryan Institute of Engineering &amp; Technology - Secure Login Portal.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="https://aryanims.in/images/favicon.png">
+    <!-- Page Title  -->
+    <title>Login |
+        Aryan Institute of Engineering &amp; Technology    </title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="https://aryanims.in/assets/css/dashlite.css?ver=3.2.3">
+    <link id="skin-default" rel="stylesheet" href="https://aryanims.in/assets/css/theme.css?ver=3.2.3">
+    <!-- Removed external font to improve load speed -->
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+            --shadow-soft: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            --shadow-primary: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        body.pg-auth {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8fafc;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 25%);
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism Card */
+        .nk-auth-container {
+            background: var(--glass-bg) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: var(--glass-border);
+            box-shadow: 20px 0 60px rgba(0, 0, 0, 0.05);
+        }
+
+        .nk-split-stretch {
+            background: rgba(255, 255, 255, 0.6) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Typography & Headings */
+        .nk-block-title {
+            font-weight: 700;
+            color: #1e293b;
+            letter-spacing: -0.5px;
+        }
+
+        .nk-block-des p {
+            color: #64748b;
+            font-size: 1.05rem;
+        }
+
+        /* Inputs */
+        .form-label {
+            font-weight: 500;
+            color: #334155;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            background-color: #fff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--primary-gradient) !important;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Captcha */
+        .captcha-img {
+            height: 50px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .refresh-captcha {
+            cursor: pointer;
+            transition: all 0.4s ease;
+            color: #6366f1;
+            background: #e0e7ff;
+            padding: 5px;
+            border-radius: 50%;
+        }
+
+        .refresh-captcha:hover {
+            transform: rotate(180deg);
+            background: #6366f1;
+            color: white !important;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+
+
+
+
+
+        .nk-auth-body {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .card-title .title {
+            font-weight: 700;
+            color: #334155;
+        }
+
+        /* Notification area tweaks */
+        .nk-split-stretch .card {
+            background: transparent !important;
+            border: none;
+            box-shadow: none;
+        }
+
+        .user-card .user-avatar {
+            border-radius: 10px;
+            background: var(--secondary-gradient) !important;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .nk-auth-container {
+            --glass-bg: rgba(15, 23, 42, 0.85);
+            /* Darker glass */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .nk-split-stretch {
+            background: rgba(15, 23, 42, 0.6) !important;
+        }
+
+        body.dark-mode .nk-block-title {
+            color: #f8fafc;
+        }
+
+        body.dark-mode .nk-block-des p {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .form-label {
+            color: #cbd5e1;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #1e293b;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+
+        body.dark-mode .form-control:focus {
+            background-color: #1e293b;
+            border-color: #6366f1;
+        }
+
+
+
+        body.dark-mode .card-title .title {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .user-name a {
+            color: #a5b4fc !important;
+        }
+
+        body.dark-mode .user-name .text-muted {
+            color: #94a3b8 !important;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: cursor;
+            box-shadow: var(--shadow-soft);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        /* Hide mobile promo toggle if it conflicts, or just position this nicely */
+    </style>
+</head>
+
+<body class="nk-body npc-default pg-auth">
+    <div class="nk-app-root">
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+            <em class="icon ni ni-moon"></em>
+        </button>
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap nk-wrap-nosidebar">
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="nk-split nk-split-page nk-split-lg">
+                        <div class="nk-split-content nk-block-area nk-block-area-column nk-auth-container">
+
+                            <div class="nk-block nk-block-middle nk-auth-body">
+                                <div class="brand-logo pb-5 text-center">
+                                    <a href="https://aryanims.in/" class="logo-link">
+                                        <img class="logo-light logo-img logo-img-lg"
+                                            src="https://aryanims.in/images/logo.png"
+                                            srcset="https://aryanims.in/images/logo.png 2x" alt="logo">
+                                        <img class="logo-dark logo-img logo-img-lg"
+                                            src="https://aryanims.in/images/logo.png"
+                                            srcset="https://aryanims.in/images/logo.png 2x" alt="logo-dark">
+                                    </a>
+                                </div>
+                                <div class="nk-block-head text-center">
+                                    <div class="nk-block-head-content">
+                                        <h5 class="nk-block-title">Sign-In</h5>
+                                        <div class="nk-block-des">
+                                            <p>Access the
+                                                Aryan Institute of Engineering &amp; Technology                                                using your username and passcode.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div><!-- .nk-block-head -->
+
+                                
+                                
+                                <form action="https://aryanims.in/login" method="POST" class="form-validate is-alter"
+                                    autocomplete="off">
+                                    <input type="hidden" name="csrf_token_name" value="1fda2f5701cf581f2e2b7a064b0f9b31f8737137592a0dcb4bb068bb8888b3b6">                                    <div class="form-group">
+                                        <div class="form-label-group">
+                                            <label class="form-label" for="username">Username</label>
+                                        </div>
+                                        <div class="form-control-wrap">
+                                            <input autocomplete="off" type="text" name="username"
+                                                class="form-control form-control-lg" required id="username"
+                                                placeholder="Enter your username" value="">
+                                        </div>
+                                                                            </div><!-- .form-group -->
+                                    <div class="form-group">
+                                        <div class="form-label-group">
+                                            <label class="form-label" for="password">Passcode</label>
+                                            <a class="link link-primary link-sm" tabindex="-1"
+                                                href="https://aryanims.in/forgot-password">Forgot Code?</a>
+                                        </div>
+                                        <div class="form-control-wrap">
+                                            <input autocomplete="new-password" type="password" name="password"
+                                                class="form-control form-control-lg" required id="password"
+                                                placeholder="Enter your passcode">
+                                            <a tabindex="-1" href="#"
+                                                class="form-icon form-icon-right passcode-switch lg"
+                                                data-target="password">
+                                                <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                                                <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                            </a>
+                                        </div>
+                                                                            </div><!-- .form-group -->
+
+                                    <!-- Captcha -->
+                                    <div class="form-group">
+                                        <div class="form-label-group">
+                                            <label class="form-label" for="captcha">Security Check</label>
+                                        </div>
+                                        <div class="row g-2 align-items-center">
+                                            <div class="col-7">
+                                                <div class="form-control-wrap">
+                                                    <input type="text" name="captcha" id="captcha"
+                                                        class="form-control form-control-lg" required
+                                                        placeholder="Enter code" maxlength="4">
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <img src="https://aryanims.in/captcha" alt="CAPTCHA"
+                                                        id="captchaImage" class="captcha-img flex-grow-1"
+                                                        style="width: 0; min-width: 0;">
+                                                    <em class="icon ni ni-reload refresh-captcha text-primary flex-shrink-0"
+                                                        id="refreshCaptcha"
+                                                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"></em>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                                            </div>
+
+                                    <div class="form-group">
+                                        <button class="btn btn-lg btn-primary btn-block">Sign in</button>
+                                    </div>
+                                </form><!-- form -->
+
+                            </div><!-- .nk-block -->
+                            <div class="nk-block nk-auth-footer">
+
+                                <div class="mt-3">
+                                    <p>&copy; 2026                                        Aryan Institute of Engineering &amp; Technology.
+                                        All Rights Reserved.
+                                    </p>
+                                </div>
+                            </div><!-- .nk-block -->
+                        </div><!-- .nk-split-content -->
+                        <div class="nk-split-content nk-split-stretch toggle-screen-lg" data-toggle-body="true"
+                            data-content="athPromo" data-toggle-screen="lg" data-toggle-overlay="true">
+                            <div class="card" style="margin-top:30px">
+                                <div class="text-center mb-4 pt-2">
+                                    <img src="https://aryanims.in/images/notification.gif" alt="Notification"
+                                        style="width: 100px;">
+                                </div>
+                                <div class="card-inner mb-n2">
+                                    <div class="card-title-group">
+                                        <div class="card-title ">
+                                            <h6 class="title">Latest Notifications</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nk-tb-list mt-n2">
+                                    <div class="nk-tb-item nk-tb-head">
+                                        <div class="nk-tb-col "><span></span></div>
+                                    </div>
+
+                                                                                                                        <div class="nk-tb-item">
+                                                <div class="nk-tb-col">
+                                                    <div class="user-card">
+                                                        <div class="user-avatar sm bg-purple-dim">
+                                                            <span>BPU</span>
+                                                        </div>
+                                                        <div class="user-name">
+                                                            <span class="tb-lead">
+                                                                <a target="_blank" href="https://drive.google.com/file/d/1OYoEyImDRZmuDGT-fDP7yHKYAeTSkaO_/view">
+                                                                    BPUT Academic Calendar for Even Semester 2025-26                                                                                                                                            <span class="badge badge-dot bg-danger ms-1">New</span>
+                                                                                                                                    </a>
+                                                            </span>
+                                                            <div class="text-muted small">
+                                                                <em class="icon ni ni-calendar me-1"></em>
+                                                                11 Jan 2026                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                                                                            </div>
+                            </div>
+                        </div><!-- .nk-split-content -->
+                    </div><!-- .nk-split -->
+                </div>
+                <!-- wrap @e -->
+            </div>
+            <!-- content @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+    <!-- JavaScript -->
+    <script src="https://aryanims.in/assets/js/bundle.js?ver=3.2.3"></script>
+    <script src="https://aryanims.in/assets/js/scripts.js?ver=3.2.3"></script>
+    <script>
+        $(document).ready(function () {
+            // Captcha Refresh
+            $('#refreshCaptcha').on('click', function () {
+                $('#captchaImage').attr('src', 'https://aryanims.in/captcha?v=' + new Date().getTime());
+                $('#captcha').val('').focus();
+            });
+
+            // Dark Mode Logic
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('em');
+            const body = document.body;
+
+            // Check saved preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                icon.classList.replace('ni-moon', 'ni-sun');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                const isDark = body.classList.contains('dark-mode');
+
+                // Update icon
+                if (isDark) {
+                    icon.classList.replace('ni-moon', 'ni-sun');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    icon.classList.replace('ni-sun', 'ni-moon');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
